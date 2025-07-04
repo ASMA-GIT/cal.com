@@ -5,10 +5,10 @@ import { Toaster } from "sonner";
 
 import { APP_NAME } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { PasswordField } from "@calcom/ui/components/form";
-import { TextField } from "@calcom/ui/components/form";
 import { Alert } from "@calcom/ui/components/alert";
 import { Button } from "@calcom/ui/components/button";
+import { PasswordField } from "@calcom/ui/components/form";
+import { TextField } from "@calcom/ui/components/form";
 import { Form } from "@calcom/ui/components/form";
 
 export default function AppleCalendarSetup() {
@@ -22,6 +22,11 @@ export default function AppleCalendarSetup() {
   });
 
   const [errorMessage, setErrorMessage] = useState("");
+  // Watch form fields
+  const email = form.watch("username");
+  const password = form.watch("password");
+
+  const allFieldsFilled = email && password;
 
   return (
     <div className="bg-emphasis flex h-screen dark:bg-inherit">
@@ -104,6 +109,7 @@ export default function AppleCalendarSetup() {
                   <Button
                     type="submit"
                     loading={form.formState.isSubmitting}
+                    disabled={!allFieldsFilled}
                     data-testid="apple-calendar-login-button">
                     {t("save")}
                   </Button>

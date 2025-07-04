@@ -22,6 +22,12 @@ export default function CalDavCalendarSetup() {
 
   const [errorMessage, setErrorMessage] = useState("");
   const [errorActionUrl, setErrorActionUrl] = useState("");
+  // Watch form fields
+  const url = form.watch("url");
+  const email = form.watch("username");
+  const password = form.watch("password");
+
+  const allFieldsFilled = url && email && password;
 
   return (
     <div className="bg-emphasis flex h-screen">
@@ -107,7 +113,7 @@ export default function CalDavCalendarSetup() {
                   <Button type="button" color="secondary" onClick={() => router.back()}>
                     {t("cancel")}
                   </Button>
-                  <Button type="submit" loading={form.formState.isSubmitting}>
+                  <Button type="submit" loading={form.formState.isSubmitting} disabled={!allFieldsFilled}>
                     {t("save")}
                   </Button>
                 </div>
